@@ -3,6 +3,11 @@ body {
   background-color: #E8ECEF;
 }
 
+.links {
+  text-align: right;
+  float: right;
+}
+
 .centered {
     padding-top: 200px;
     text-align: center;
