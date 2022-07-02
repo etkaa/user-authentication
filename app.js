@@ -147,7 +147,8 @@ app.get("/login", (req, res) => {
   if (req.isAuthenticated()) {
     res.redirect("/secrets");
   } else {
-    res.render("login");
+    req.logOut((err) => {});
+    res.render("login", { messages: req.session.messages });
   }
 });
 
@@ -236,7 +237,11 @@ app.post("/login", (req, res) => {
 
   req.login(user, (err) => {
     if (!err) {
-      passport.authenticate("local")(req, res, () => {
+      passport.authenticate("local", {
+        failureRedirect: "/login",
+        failureMessage: true,
+        refreshToken: true,
+      })(req, res, () => {
         res.redirect("/secrets");
       });
     } else {
